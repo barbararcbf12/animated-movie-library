@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# settings
+/src/settings/themoviedb.js
+
 # testing
 /coverage
 
