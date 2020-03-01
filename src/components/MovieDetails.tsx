@@ -4,9 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { BACKDROP_PATH, POSTER_PATH } from './Movie'
 import { Poster } from './Movie'
 import styled from 'styled-components'
-import Overdrive from 'react-overdrive'
-import { fetchMovie } from '../hooks/hooks'
-import { themoviedb } from '../settings/themoviedb'
+import { fetchMovie, themoviedb } from '../hooks'
 
 const MovieWrapper = styled.div`
     position: relative;

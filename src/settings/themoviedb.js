@@ -1,1 +1,0 @@
-export const themoviedb = '24e7a437b2b10e09df51194351fa53c5'
