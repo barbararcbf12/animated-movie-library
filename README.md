@@ -1,6 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About this project
+This is a personal project, developed for learning purposes.
+
+### Data source
+[The Movie DB](https://www.themoviedb.org/)
+
+### Project structure
+- __animated\-movie\-library__
+   - __public__
+   - __src__
+     - __@types__
+       - [Movie.ts](src/@types/Movie.ts)
+       - [alltypes.d.ts](src/@types/alltypes.d.ts)
+     - [App.tsx](src/App.tsx)
+     - __components__
+       - [ErrorComponent.tsx](src/components/ErrorComponent.tsx)
+       - [Footer.tsx](src/components/Footer.tsx)
+       - [Header.tsx](src/components/Header.tsx)
+       - [Movie.tsx](src/components/Movie.tsx)
+       - [MovieDetails.tsx](src/components/MovieDetails.tsx)
+       - [MoviesList.tsx](src/components/MoviesList.tsx)
+       - [NotFoundComponent.tsx](src/components/NotFoundComponent.tsx)
+     - __hooks__
+       - [hooks.tsx](src/hooks/hooks.tsx)
+     - [index.js](src/index.js)
+     - __settings__
+       - [themoviedb.js](src/settings/themoviedb.js)
+
+### Inspiration
+[Level up tutorials](https://www.leveluptutorials.com/)
+
 
 ## Available Scripts
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
