@@ -2,6 +2,8 @@ import React from 'react'
 import ErrorComponent from '../components/ErrorComponent'
 import { MovieType } from '../@types/Movie'
 
+export const themoviedb = process.env.REACT_APP_THEMOVIEDB_APIKEY
+
 type MoviesRequest = {
     url: string,
     setMovies: React.Dispatch<React.SetStateAction<MovieType[] | undefined>>
