@@ -31,7 +31,7 @@ function Footer() {
         <FooterStyled>
             <FooterContent>
                 <div>@ Barbara Ferreira - barbaraferreira12@gmail.com</div>
-                <div>Data source: <a href="http://www.themoviedb.org" target="_blank">The Movie DB</a></div>
+                <div>Data source: http://www.themoviedb.org"</div>
             </FooterContent>
         </FooterStyled>
     )

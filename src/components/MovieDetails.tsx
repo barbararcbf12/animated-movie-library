@@ -37,24 +37,20 @@ type NavigationProp = {
 
 function MovieDetails({ match }: RouteComponentProps<NavigationProp>) {
     const [movie, setMovie] = useState<MovieType>()
-    const [url, setUrl] = useState('')
+    const [URL_MOVIE, setUrl] = useState('')
 
     useEffect(() => {
         if(match){
             setUrl(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${themoviedb}&language=en-US`)
         }
         
-        fetchMovie({ url, setMovie })
-    }, [match, url])
-    
-    const movieId = movie?.id && movie.id.toString()
+        fetchMovie({ URL_MOVIE, setMovie })
+    }, [match, URL_MOVIE])
 
     return (
         <MovieWrapper backdrop={`${BACKDROP_PATH}${movie?.backdrop_path}`} >
             <MovieInfo>
-                <Overdrive id={movieId}>
-                    <Poster src={`${POSTER_PATH}${movie?.poster_path}`} alt={movie?.title} />
-                </Overdrive>
+                <Poster src={`${POSTER_PATH}${movie?.poster_path}`} alt={movie?.title} />
                 <div>
                     <h1>{ movie?.title }</h1>
                     <h5>{`Release date: ${movie?.release_date}`}</h5>
