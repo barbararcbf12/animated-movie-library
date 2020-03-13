@@ -1,12 +1,29 @@
 import React from 'react'
-import { MovieGrid } from '../components/MoviesList'
+import styled from 'styled-components'
 
-function ErrorComponent(error: any){
+const ErrorContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 80vh;
+    color: #fff;
+`
+
+const Error = styled.h1`
+    font-size: 5rem;
+    margin: 1rem;
+`
+
+type Props = {
+    error: any
+}
+
+function ErrorComponent(props: Props){
     return(
-        <MovieGrid>
-            <h1>The following error hapenned</h1>
-            <h5>{error}</h5>
-        </MovieGrid>
+        <ErrorContainer>
+            <Error data-testid="error">{'< ! >'}</Error>
+            <p>{props.error}</p>
+        </ErrorContainer>
     )
 }
 

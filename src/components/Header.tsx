@@ -27,7 +27,7 @@ function Header() {
         <HeaderStyled>
             <LogoStyled>
                 <Link to="/">
-                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={logo} className="App-logo" alt="logo" data-testid="logo" />
                 </Link>
             </LogoStyled>
         </HeaderStyled>

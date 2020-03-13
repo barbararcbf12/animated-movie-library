@@ -11,6 +11,8 @@ const MovieWrapper = styled.div`
     padding-top: 50vh;
     background: url(${(props: PropsStyle) => props.backdrop}) no-repeat;
     background-size: cover;
+    width: 100%;
+    min-height: 80vh;
 `
 
 export const MovieInfo = styled.div`
@@ -31,7 +33,7 @@ type PropsStyle = {
     backdrop: string
 }
 
-type NavigationProp = {
+export type NavigationProp = {
     id: string
 }
 
@@ -40,21 +42,25 @@ function MovieDetails({ match }: RouteComponentProps<NavigationProp>) {
     const [URL_MOVIE, setUrl] = useState('')
 
     useEffect(() => {
+        // let isCurrent = true
         if(match){
             setUrl(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${themoviedb}&language=en-US`)
         }
         
         fetchMovie({ URL_MOVIE, setMovie })
+
     }, [match, URL_MOVIE])
 
+    if(!movie?.id) return null
+
     return (
-        <MovieWrapper backdrop={`${BACKDROP_PATH}${movie?.backdrop_path}`} >
+        <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`} >
             <MovieInfo>
-                <Poster src={`${POSTER_PATH}${movie?.poster_path}`} alt={movie?.title} />
+                <Poster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
                 <div>
-                    <h1>{ movie?.title }</h1>
-                    <h5>{`Release date: ${movie?.release_date}`}</h5>
-                    <article>{movie?.overview}</article>
+                    <h1 data-testid="movie-title">{ movie.title }</h1>
+                    <h5>{`Release date: ${movie.release_date}`}</h5>
+                    <article>{movie.overview}</article>
                 </div>
             </MovieInfo>
         </MovieWrapper>
