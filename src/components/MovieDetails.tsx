@@ -5,20 +5,30 @@ import { BACKDROP_PATH, POSTER_PATH } from './Movie'
 import { Poster } from './Movie'
 import styled from 'styled-components'
 import { fetchMovie, themoviedb } from '../hooks'
+import NO_POSTER from '../no-poster.jpg'
 
 const MovieWrapper = styled.div`
     position: relative;
-    padding-top: 50vh;
+    padding-top: 30vh;
     background: url(${(props: PropsStyle) => props.backdrop}) no-repeat;
     background-size: cover;
     width: 100%;
     min-height: 80vh;
+
+    @media only screen 
+    and (max-width : 750px) 
+    and (max-height : 1334px) {
+        /* Styles here */
+        background-size: contain;
+    }
 `
 
 export const MovieInfo = styled.div`
     background: #fff;
     text-align: left;
     padding: 2rem 10%;
+    position: relative;
+    top: 150px;
     display: flex;
     > div {
         margin-left: 20px;
@@ -26,6 +36,23 @@ export const MovieInfo = styled.div`
     img {
         position: relative;
         top: -5rem;
+    }
+
+    @media only screen 
+    and (max-width : 750px) 
+    and (max-height : 1334px) {
+    /* Styles here */
+        position: relative;
+        top: 10px;
+        > div {
+            margin-left: -165px;
+        }
+        img {
+            top: -14rem;
+            left: -1rem;
+            height: 231px;
+            width: 154px; 
+        }
     }
 `
 
@@ -56,7 +83,7 @@ function MovieDetails({ match }: RouteComponentProps<NavigationProp>) {
     return (
         <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`} >
             <MovieInfo>
-                <Poster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
+                <Poster src={movie.poster_path ? `${POSTER_PATH}${movie.poster_path}` : NO_POSTER} alt={movie.title} />
                 <div>
                     <h1 data-testid="movie-title">{ movie.title }</h1>
                     <h5>{`Release date: ${movie.release_date}`}</h5>

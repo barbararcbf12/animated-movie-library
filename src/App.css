@@ -12,7 +12,7 @@ h1, .navItems {
 }
 
 .App-logo {
-  height: 5vmin;
+  height: 6vmin;
   pointer-events: none;
 }
 
@@ -23,7 +23,7 @@ h1, .navItems {
 .navItems, .navItems > buttom {
   background-color: transparent;
   border: 0;
-  font-size: 2vmin;
+  font-size: 1rem;
   padding: 0 10px;
   color: #fff;
   text-decoration: none;
@@ -31,11 +31,34 @@ h1, .navItems {
 }
 
 .pagination {
-  font-size: 2vmin;
+  font-size: 1rem;
   font-family: 'Gloria Hallelujah', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #fff;
 }
 
 .loading {
   color: #fff;
+}
+
+.mini-poster{
+  overflow: hidden;  /* NEW */
+  min-width: 0;      /* NEW; needed for Firefox */
+}
+
+img.mini-poster{
+  max-width: 100%;
+}
+
+@media only screen 
+  and (max-width : 750px) 
+  and (max-height : 1334px) {
+
+  /* Styles here */
+  img.mini-poster{
+    max-width: 100px; 
+  }
+
+  .App-logo {
+    height: 10vmin;
+  }
 }

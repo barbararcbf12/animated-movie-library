@@ -35,7 +35,7 @@ function Movie(props: Props) {
   return(
     <animated.div style={fade}>
       <Link to={`/${movieId}`} data-testid="movie-link">
-        <Poster src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} alt={title} data-testid="movie-img" />
+        <Poster className="mini-poster" src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} alt={title} data-testid="movie-img" />
       </Link>
     </animated.div>
   )

@@ -11,7 +11,26 @@ export const MovieGrid = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-row-gap: 1rem;
   grid-column-gap: 5px;
-  min-height: 80vh;
+  // overflow: hidden;
+  // height: 231px;
+  min-height: 0;  /* NEW */
+  min-width: 0;   /* NEW; needed for Firefox */
+
+  @media only screen 
+    and (max-width : 750px) 
+    and (max-height : 1334px) {
+    /* Styles here */
+    padding: 1rem 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+`
+
+// .day-item {
+export const MovieGridItem = styled.div`
+  // padding: 10px;
+  background: #DFE7E7;
+  overflow: hidden;  /* NEW */
+  min-width: 0;      /* NEW; needed for Firefox */
 `
 
 const PageContainer = styled.div`
@@ -25,11 +44,19 @@ const WrapperSearch = styled.div`
   border: 1px solid #dfe1e5;
   box-shadow: none;
   height: 39px;
-  width: 638px;
+  min-width: 360px;
+  max-width: 638px;
   border-radius: 24px;
   z-index: 3;
   height: 44px;
   margin: 0 auto;
+
+  @media only screen 
+    and (max-width : 750px) 
+    and (max-height : 1334px) {
+    /* Styles here */
+    max-width: 360px;
+  }
 `
 
 const InputSearch = styled.input`
@@ -107,8 +134,8 @@ function MoviesList(){
     else setQuery('a')
   }
 
-  const previous = "< previous page"
-  const next = "next page >"
+  const previous = "< previous"
+  const next = "next >"
   
   return error !== null ? (<ErrorComponent error={error} />) : (
     <PageContainer>
@@ -137,9 +164,11 @@ function MoviesList(){
         )}
         
         <MovieGrid>
+          {/* <MovieGridItem> */}
             {movies.map((movie: MovieType) => (
                 <Movie key={movie.id} movie={movie} />
             ))}
+          {/* </MovieGridItem> */}
         </MovieGrid>
 
       </PageContainer>
