@@ -21,7 +21,7 @@ type Props = {
 function ErrorComponent(props: Props){
     return(
         <ErrorContainer>
-            <Error data-testid="error">{'< ! >'}</Error>
+            <Error data-testid="errormsg">{'< ! >'}</Error>
             <p>{props.error}</p>
         </ErrorContainer>
     )

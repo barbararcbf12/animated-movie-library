@@ -10,7 +10,7 @@ export const movies: MovieType[] = [
         vote_count: 666,
         video: false,
         poster_path: "/eFCzU9Jqp2Ea17ysDkG8PB0NLiR.jpg",
-        id: 475302,
+        id: '475302',
         adult: false,
         backdrop_path: "/6fkqwqLEcDZOEAnBBfKAniwNxtx.jpg",
         original_language: "en",
@@ -26,7 +26,7 @@ export const movies: MovieType[] = [
         vote_count: 666,
         video: false,
         poster_path: "/eFCzU9Jqp2Ea17ysDkG8PB0NLiR.jpg",
-        id: 475303,
+        id: '475303',
         adult: false,
         backdrop_path: "/6fkqwqLEcDZOEAnBBfKAniwNxtx.jpg",
         original_language: "en",
@@ -41,20 +41,12 @@ export const movies: MovieType[] = [
 
 afterEach(() => cleanup)
 
-//console.error = jest.fn()
-
 test('<Movie />', () => {
-    render(<Movie />)
-    //expect(console.error).toHaveBeenCalled()
-})
-
-test('<Movie /> with movie', () => {
     const { getByTestId } = render(
         <MemoryRouter>
             <Movie movie={movies[0]} />
         </MemoryRouter>
     )
-    //expect(console.error).not.toHaveBeenCalled()
     expect(getByTestId('movie-link').getAttribute('href')).toBe(`/${movies[0].id}`)
     expect(getByTestId('movie-img').src).toBe(`${POSTER_PATH}${movies[0].poster_path}`)
 })

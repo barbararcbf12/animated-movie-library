@@ -11,23 +11,18 @@ export const MovieGrid = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-row-gap: 1rem;
   grid-column-gap: 5px;
-  // overflow: hidden;
-  // height: 231px;
   min-height: 0;  /* NEW */
   min-width: 0;   /* NEW; needed for Firefox */
 
   @media only screen 
     and (max-width : 750px) 
     and (max-height : 1334px) {
-    /* Styles here */
     padding: 1rem 2rem;
     grid-template-columns: repeat(3, 1fr);
   }
 `
 
-// .day-item {
 export const MovieGridItem = styled.div`
-  // padding: 10px;
   background: #DFE7E7;
   overflow: hidden;  /* NEW */
   min-width: 0;      /* NEW; needed for Firefox */
@@ -54,7 +49,6 @@ const WrapperSearch = styled.div`
   @media only screen 
     and (max-width : 750px) 
     and (max-height : 1334px) {
-    /* Styles here */
     max-width: 360px;
   }
 `
@@ -64,7 +58,7 @@ const InputSearch = styled.input`
   border: none;
   margin: 0;
   padding: 10px 20px 0 20px;
-  color: #fff; //rgba(0,0,0,.87);
+  color: #fff;
   word-wrap: break-word;
   outline: none;
   display: flex;
@@ -82,8 +76,8 @@ const Pagination = styled.div`
 
 type State = {
   loading: boolean,
-  movies: MovieType[],
-  error: any
+  movies: MovieType[] | undefined,
+  error: string | undefined
 }
 
 function MoviesList(){
@@ -92,21 +86,21 @@ function MoviesList(){
   const [query, setQuery] = useState<any>('a')
   const [state, setState] = useState<State>({
     loading: false,
-    movies: [],
-    error: null
+    movies: undefined,
+    error: undefined
   })
 
   const { loading, movies, error } = state
 
   useEffect(() => {
     async function getData(){
-      setState({loading: true, movies: [], error: null})
+      setState({ loading: true, movies: undefined, error: undefined })
       const { data, error } = await searchMovies(query, pageNumber)
-      if(!error){
-        setState({ loading: false, movies: data.results, error: null })
-        setTotalPages(data.total_pages)
+      if(error !== undefined){
+        setState({ loading: false, movies: undefined, error: error.message })
       }else{
-        setState({ loading: false, movies: [], error: error.message })
+        setState({ loading: false, movies: data.results, error: undefined })
+        setTotalPages(data.total_pages)
       }
     }
     getData()
@@ -136,8 +130,9 @@ function MoviesList(){
 
   const previous = "< previous"
   const next = "next >"
-  
-  return error !== null ? (<ErrorComponent error={error} />) : (
+
+  return error ? <ErrorComponent error={error} />
+  :  (
     <PageContainer>
         <WrapperSearch>
           <InputSearch
@@ -146,7 +141,7 @@ function MoviesList(){
             onChange={ event => filterSearch(event) }
           />
         </WrapperSearch>
-        { loading ? <h1 data-testid="loading" className="loading">Loading...</h1> : (
+        { loading ? (<h1 data-testid="loading" className="loading">Loading...</h1>) : (
           <Pagination>
             <button onClick={previousPage} className="navItems" style={
               movies && pageNumber && pageNumber !== 1 ? {color:'#fff'} : {color:'#555'}}
@@ -164,11 +159,9 @@ function MoviesList(){
         )}
         
         <MovieGrid>
-          {/* <MovieGridItem> */}
-            {movies.map((movie: MovieType) => (
+            {movies?.map((movie: MovieType) => (
                 <Movie key={movie.id} movie={movie} />
             ))}
-          {/* </MovieGridItem> */}
         </MovieGrid>
 
       </PageContainer>

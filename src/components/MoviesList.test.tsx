@@ -1,31 +1,35 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { render, cleanup, wait } from '@testing-library/react'
+import { render, cleanup, wait, queryByTestId, queryAllByTestId } from '@testing-library/react'
 import MoviesList from './MoviesList'
 import { POSTER_PATH } from './Movie'
 import { movies } from './Movie.test'
-import { searchMovies } from '../hooks'
+import { searchMovies, FetchError } from '../hooks'
+import { MovieType } from '../@types/Movie'
 
 jest.mock('../hooks')
 
 afterEach(()=> {
+    jest.clearAllMocks()
     cleanup
-    jest.resetAllMocks()
 })
 
-const FetchError = {
-    message: 'invalid json response body at  reason: Unexpected end of JSON input',
+export const Error: FetchError = {
+    message: 'Failed to fetch',
     type: 'invalid-json'
 }
 
-function buildSearch(overrides: any) {
+export type ApiResponse = {
+    data: {
+        results: MovieType[]
+    } | undefined,
+    error: FetchError | undefined
+}
+
+function buildSearch(overrides: any): ApiResponse {
     return ({
-        data: {
-            results: ['TEST_MOVIES']
-        },
-        error: {
-            message: 'TEST_ERROR'
-        },
+        data: undefined,
+        error: undefined,
       ...overrides,
     })
   }
@@ -34,7 +38,7 @@ test('<MoviesList />', async () => {
     const query = 'a'
     const pageNumber = 1
 
-    searchMovies.mockResolvedValueOnce(buildSearch({ data: {results: movies}, error: null }))
+    searchMovies.mockResolvedValueOnce(buildSearch({ data: { results: movies }, error: undefined }))
     
     const { getByTestId, queryByTestId, getAllByTestId } = render(
         <MemoryRouter>
@@ -53,3 +57,21 @@ test('<MoviesList />', async () => {
     expect(getAllByTestId('movie-img')[0].src).toBe(`${POSTER_PATH}${movies[0].poster_path}`)
     
 })
+
+test('<MoviesList /> fails api call', async () => {
+    const query = 'a'
+    const pageNumber = 1
+    searchMovies.mockResolvedValueOnce(buildSearch({ data: undefined, error: { message: Error.message , type: Error.type } }))
+    
+    const { getByTestId } = render(
+        <MemoryRouter>
+            <MoviesList />
+        </MemoryRouter>
+    )
+
+    expect(searchMovies).toHaveBeenCalledWith(query, pageNumber)
+    expect(searchMovies).toHaveBeenCalledTimes(1)
+    await wait(() => getByTestId('errormsg'))
+    expect(getByTestId('errormsg')).toBeTruthy()
+})
+

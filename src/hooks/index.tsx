@@ -1,35 +1,36 @@
-import React from 'react'
-import ErrorComponent from '../components/ErrorComponent'
 import { MovieType } from '../@types/Movie'
 
 export const themoviedb = process.env.REACT_APP_THEMOVIEDB_APIKEY
 
 const URL_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key="
 
-type MovieRequest = {
-    URL_MOVIE: string,
-    setMovie: React.Dispatch<React.SetStateAction<MovieType | undefined>>
+export type FetchError = {
+    message: string,
+    type: string
 }
 
-export async function fetchMovie({ URL_MOVIE, setMovie }: MovieRequest){
+export async function fetchMovie(movieId: string): Promise<{
+    data: MovieType | undefined;
+    error: FetchError | undefined
+}>{
     try {
-        const res = await fetch(URL_MOVIE)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${themoviedb}&language=en-US`)
         const movie = await res.json()
-        setMovie(movie)
-    } catch (e) {
-        return <ErrorComponent error={e} />
+        return { data: movie, error: undefined }
+    } catch (e) {        
+        return { data: undefined, error: e }
     }
 }
 
 export async function searchMovies(query: string, pageNumber: number): Promise<{
-    data: any;
-    error: any
+    data: any | undefined;
+    error: FetchError | undefined
 }>{
     try {
         const res = await fetch(`${URL_SEARCH + themoviedb + "&language=en-US&query=" + query + "&page=" + pageNumber}`)
         const movies = await res.json()
-        return { data: movies, error: null }
+        return { data: movies, error: undefined }
     } catch (e) {
-        return { data: [], error: e }
+        return { data: undefined, error: e }
     }
   }

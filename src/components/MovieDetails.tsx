@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { MovieType } from '../@types/Movie'
 import { RouteComponentProps } from 'react-router-dom'
-import { BACKDROP_PATH, POSTER_PATH } from './Movie'
-import { Poster } from './Movie'
+import { BACKDROP_PATH, POSTER_PATH, Poster } from './Movie'
 import styled from 'styled-components'
-import { fetchMovie, themoviedb } from '../hooks'
+import { fetchMovie } from '../hooks'
+import ErrorComponent from '../components/ErrorComponent'
 import NO_POSTER from '../no-poster.jpg'
 
 const MovieWrapper = styled.div`
@@ -18,7 +18,6 @@ const MovieWrapper = styled.div`
     @media only screen 
     and (max-width : 750px) 
     and (max-height : 1334px) {
-        /* Styles here */
         background-size: contain;
     }
 `
@@ -41,7 +40,6 @@ export const MovieInfo = styled.div`
     @media only screen 
     and (max-width : 750px) 
     and (max-height : 1334px) {
-    /* Styles here */
         position: relative;
         top: 10px;
         > div {
@@ -64,30 +62,46 @@ export type NavigationProp = {
     id: string
 }
 
+type State = {
+  loading: boolean,
+  movie: MovieType | undefined,
+  error: string | undefined
+}
+
 function MovieDetails({ match }: RouteComponentProps<NavigationProp>) {
-    const [movie, setMovie] = useState<MovieType>()
-    const [URL_MOVIE, setUrl] = useState('')
+    const [state, setState] = useState<State>({
+      loading: false,
+      movie: undefined,
+      error: undefined
+    })
+
+    const { loading, movie, error } = state
 
     useEffect(() => {
-        // let isCurrent = true
-        if(match){
-            setUrl(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${themoviedb}&language=en-US`)
+        async function getData(){
+            setState({ loading: true, movie: undefined, error: undefined })
+            const { data, error } = await fetchMovie(match?.params.id)
+            if(error !== undefined){
+                setState({ loading: false, movie: undefined, error: error.message })
+            }else{
+                setState({ loading: false, movie: data, error: undefined })
+            }
         }
-        
-        fetchMovie({ URL_MOVIE, setMovie })
+        getData()
 
-    }, [match, URL_MOVIE])
+    }, [match, match.params.id])
 
-    if(!movie?.id) return null
+    if ( error ) return <ErrorComponent error={error} /> 
+    if ( !loading && !movie?.id ) return <ErrorComponent error={"Movie not found!"} /> 
 
-    return (
-        <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`} >
+    return loading ? <h1 data-testid="loading" className="loading">Loading...</h1> : (
+        <MovieWrapper backdrop={`${BACKDROP_PATH}${movie?.backdrop_path}`} >
             <MovieInfo>
-                <Poster src={movie.poster_path ? `${POSTER_PATH}${movie.poster_path}` : NO_POSTER} alt={movie.title} />
+                <Poster src={movie?.poster_path ? `${POSTER_PATH}${movie?.poster_path}` : NO_POSTER} alt={movie?.title} />
                 <div>
-                    <h1 data-testid="movie-title">{ movie.title }</h1>
-                    <h5>{`Release date: ${movie.release_date}`}</h5>
-                    <article>{movie.overview}</article>
+                    <h1 data-testid="movie-title">{ movie?.title }</h1>
+                    <h5>{`Release date: ${movie?.release_date}`}</h5>
+                    <article>{movie?.overview}</article>
                 </div>
             </MovieInfo>
         </MovieWrapper>
