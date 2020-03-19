@@ -1,13 +1,13 @@
 import React from 'react'
 import { render, cleanup, wait } from '@testing-library/react'
-import MovieDetails from './MovieDetails'
-import { fetchMovie, themoviedb } from '../hooks'
+import MovieDetails from '../MovieDetails'
+import { fetchMovie, themoviedb } from '../../hooks'
 import { createMemoryHistory, createLocation } from 'history'
 import { Error, ApiResponse } from './MoviesList.test'
 import { movies } from './Movie.test'
 import { match as routerMatch } from 'react-router'
 
-jest.mock('../hooks')
+jest.mock('../../hooks')
 
 afterEach(()=> {
     jest.clearAllMocks()

@@ -1,8 +1,8 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { render, cleanup } from '@testing-library/react'
-import Movie, { POSTER_PATH } from './Movie'
-import { MovieType } from '../@types/Movie'
+import Movie, { POSTER_PATH } from '../Movie'
+import { MovieType } from '../../@types/Movie'
 
 export const movies: MovieType[] = [
     { 

@@ -1,13 +1,13 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { render, cleanup, wait, queryByTestId, queryAllByTestId } from '@testing-library/react'
-import MoviesList from './MoviesList'
-import { POSTER_PATH } from './Movie'
+import { render, cleanup, wait } from '@testing-library/react'
+import MoviesList from '../MoviesList'
+import { POSTER_PATH } from '../Movie'
 import { movies } from './Movie.test'
-import { searchMovies, FetchError } from '../hooks'
-import { MovieType } from '../@types/Movie'
+import { searchMovies, FetchError } from '../../hooks'
+import { MovieType } from '../../@types/Movie'
 
-jest.mock('../hooks')
+jest.mock('../../hooks')
 
 afterEach(()=> {
     jest.clearAllMocks()
