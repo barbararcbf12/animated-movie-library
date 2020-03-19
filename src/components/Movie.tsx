@@ -9,6 +9,11 @@ export const Poster = styled.img`
   box-shadow: 0 0 35px black;
 `
 
+export const Wrapper = styled.div`
+  overflow: hidden;
+  height: 231px;
+`
+
 export const POSTER_PATH = 'http://image.tmdb.org/t/p/w154/'
 export const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280/'
 
@@ -34,9 +39,11 @@ function Movie(props: Props) {
   
   return(
     <animated.div style={fade}>
-      <Link to={`/${movieId}`} data-testid="movie-link">
-        <Poster className="mini-poster" src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} alt={title} data-testid="movie-img" />
-      </Link>
+      <Wrapper>
+        <Link to={`/${movieId}`} data-testid="movie-link">
+          <Poster className="mini-poster" src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} alt={title} data-testid="movie-img" />
+        </Link>
+      </Wrapper>
     </animated.div>
   )
 }
