@@ -8,7 +8,7 @@ import styled from 'styled-components'
 export const MovieGrid = styled.div`
   display: grid;
   padding: 2rem 10rem;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 1rem;
   grid-column-gap: 5px;
   min-height: 0;  /* NEW */
@@ -17,7 +17,8 @@ export const MovieGrid = styled.div`
   @media only screen 
     and (max-width : 750px) 
     and (max-height : 1334px) {
-    padding: 1rem 2rem;
+    padding: 1rem 0.25rem;
+    grid-row-gap: 0.25rem;
     grid-template-columns: repeat(3, 1fr);
   }
 `
@@ -39,7 +40,6 @@ const WrapperSearch = styled.div`
   border: 1px solid #dfe1e5;
   box-shadow: none;
   height: 39px;
-  min-width: 360px;
   max-width: 638px;
   border-radius: 24px;
   z-index: 3;
@@ -135,16 +135,24 @@ function MoviesList(){
   :  (
     <PageContainer>
         <WrapperSearch>
-          <InputSearch
-            type="search"
-            placeholder="Search movies..."
-            onChange={ event => filterSearch(event) }
-          />
+          <label htmlFor="searchBox" className="visuallyhidden">
+            Search for movies...
+          </label>
+            <InputSearch
+              id="searchBox"
+              type="search"
+              placeholder="Search for movies..."
+              onChange={ event => filterSearch(event) }
+            />
         </WrapperSearch>
         { loading ? (<h1 data-testid="loading" className="loading">Loading...</h1>) : (
           <Pagination>
-            <button onClick={previousPage} className="navItems" style={
-              movies && pageNumber && pageNumber !== 1 ? {color:'#fff'} : {color:'#555'}}
+            <button 
+              onClick={previousPage} 
+              className="navItems" 
+              disabled={movies && pageNumber && pageNumber !== 1 ? false : true} 
+              tabIndex={movies && pageNumber && pageNumber !== 1 ? 0 : -1} 
+              style={movies && pageNumber && pageNumber !== 1 ? {cursor: 'pointer'} : {cursor: 'none'}}
             >
               {previous}
             </button>

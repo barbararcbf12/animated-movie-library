@@ -28,6 +28,7 @@ function Header() {
             <LogoStyled>
                 <Link to="/">
                     <img src={logo} className="App-logo" alt="logo" data-testid="logo" />
+                    <h1 className="visuallyhidden">My Movie Library</h1>
                 </Link>
             </LogoStyled>
         </HeaderStyled>

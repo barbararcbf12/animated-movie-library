@@ -12,7 +12,7 @@ const FooterStyled = styled.footer`
     display: flex;
 `
     
-const FooterContent = styled.h5`
+const FooterContent = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -30,8 +30,8 @@ function Footer() {
     return (
         <FooterStyled>
             <FooterContent>
-                <div>@ Barbara Ferreira - barbaraferreira12@gmail.com</div>
-                <div>Data source: http://www.themoviedb.org"</div>
+                <p>@ Barbara Ferreira - barbaraferreira12@gmail.com<br></br>
+                Data source: http://www.themoviedb.org"</p>
             </FooterContent>
         </FooterStyled>
     )

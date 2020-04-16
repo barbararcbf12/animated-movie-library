@@ -7,6 +7,10 @@ import { fetchMovie } from '../hooks'
 import ErrorComponent from '../components/ErrorComponent'
 import NO_POSTER from '../no-poster.jpg'
 
+const MovieTitle = styled.h1`
+    color: #000;
+`
+
 const MovieWrapper = styled.div`
     position: relative;
     padding-top: 30vh;
@@ -97,11 +101,11 @@ function MovieDetails({ match }: RouteComponentProps<NavigationProp>) {
     return loading ? <h1 data-testid="loading" className="loading">Loading...</h1> : (
         <MovieWrapper backdrop={`${BACKDROP_PATH}${movie?.backdrop_path}`} >
             <MovieInfo>
-                <Poster src={movie?.poster_path ? `${POSTER_PATH}${movie?.poster_path}` : NO_POSTER} alt={movie?.title} />
+                <Poster src={ movie?.poster_path ? `${POSTER_PATH}${movie?.poster_path}` : NO_POSTER } alt={movie?.title} />
                 <div>
-                    <h1 data-testid="movie-title">{ movie?.title }</h1>
-                    <h5>{`Release date: ${movie?.release_date}`}</h5>
-                    <article>{movie?.overview}</article>
+                    <MovieTitle data-testid="movie-title">{ movie?.title }</MovieTitle>
+                    <p>{`Release date: ${ movie?.release_date }`}</p>
+                    <article>{ movie?.overview }</article>
                 </div>
             </MovieInfo>
         </MovieWrapper>

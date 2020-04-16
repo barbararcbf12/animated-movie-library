@@ -12,6 +12,11 @@ export const Poster = styled.img`
 export const Wrapper = styled.div`
   overflow: hidden;
   height: 231px;
+  @media only screen 
+    and (max-width : 750px) 
+    and (max-height : 1334px) {
+    height: 100%;
+  }
 `
 
 export const POSTER_PATH = 'http://image.tmdb.org/t/p/w154/'
@@ -40,8 +45,14 @@ function Movie(props: Props) {
   return(
     <animated.div style={fade}>
       <Wrapper>
-        <Link to={`/${movieId}`} data-testid="movie-link">
-          <Poster className="mini-poster" src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} alt={title} data-testid="movie-img" />
+        <Link to={`/${movieId}`} data-testid="movie-link" className={poster_path ? "" : "posterLinkWrapper"}>
+          <span className={poster_path ? "visuallyhidden hideElement" : "posterLabel"}>{title}</span>
+          <Poster 
+            className="mini-poster" 
+            src={poster_path ? `${POSTER_PATH}${poster_path}` : NO_POSTER} 
+            alt={title} 
+            data-testid="movie-img" 
+          />
         </Link>
       </Wrapper>
     </animated.div>

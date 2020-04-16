@@ -14,7 +14,7 @@ const Main = () => {
         leave: { opacity: 0, transform: 'translate3d(0, 100%, 0)' }
     })
     return (
-        <>
+        <main>
             { transitions.map(({ item, key, props }) => ( item &&
                 <animated.div key={key} style={props}>
                     <Switch location={item}>
@@ -24,7 +24,7 @@ const Main = () => {
                     <Footer />
                 </animated.div>
             ))}
-        </>
+        </main>
     )
 }
 
