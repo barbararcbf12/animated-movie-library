@@ -109,14 +109,14 @@ function MoviesList(){
 
   const nextPage = () => {
     if(movies && pageNumber && totalPages && pageNumber < totalPages) {
-      setPageNumber(pageNumber +=1)
+      setPageNumber(pageNumber +1)
       searchMovies(query, pageNumber)
     }
   } 
 
   const previousPage = () => {
     if(movies && pageNumber && pageNumber !== 1) {
-      setPageNumber(pageNumber -=1)
+      setPageNumber(pageNumber -1)
       searchMovies(query, pageNumber)
     }
   }
